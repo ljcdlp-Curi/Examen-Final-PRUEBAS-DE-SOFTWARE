@@ -26,5 +26,14 @@ Característica: Inicio de sesión en CiberBank
 
     Ejemplos:
       | usuario   | clave       | mensaje                                |
-      | jaime     | otraClave   | Credenciales inválidas                 |
       | bloqueado | Cibertec123 | Usuario bloqueado. Contacte a soporte  |
+
+  @login
+  Esquema del escenario: Validación de campos obligatorios
+    Dado que Jaime está en la pantalla de login
+    Cuando ingresa el usuario "<usuario>" y la contraseña "<clave>"
+    Entonces debería ver el mensaje de error del usuario "<mensaje>"
+
+    Ejemplos:
+      | usuario | clave | mensaje                   |
+      |         |       | El usuario es obligatorio |

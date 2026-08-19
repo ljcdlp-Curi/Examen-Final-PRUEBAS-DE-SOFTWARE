@@ -18,6 +18,7 @@ import static net.serenitybdd.screenplay.GivenWhenThen.seeThat;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorCalled;
 import static net.serenitybdd.screenplay.actors.OnStage.theActorInTheSpotlight;
 import static org.hamcrest.Matchers.is;
+import static net.serenitybdd.screenplay.ensure.Ensure.that;
 
 public class LoginStepDefinitions {
 
@@ -32,37 +33,46 @@ public class LoginStepDefinitions {
     }
 
     @Dado("que {word} está en la pantalla de login")
-    public void que_esta_en_la_pantalla_de_login(String actor) {
+    public void queEstaEnLaPantallaDeLogin(String actor) {
         theActorCalled(actor).attemptsTo(
                 EsperarLaPantallaDeLogin.queSeMuestre()
         );
     }
 
     @Cuando("ingresa el usuario {string} y la contraseña {string}")
-    public void ingresa_el_usuario_y_la_contrasena(String usuario, String clave) {
+    public void ingresaElUsuarioYLaContrasena(String usuario, String clave) {
         theActorInTheSpotlight().attemptsTo(
                 IniciarSesion.con(usuario, clave)
         );
     }
 
     @Entonces("debería ver el saludo {string}")
-    public void deberia_ver_el_saludo(String saludo) {
-        theActorInTheSpotlight().should(
-                seeThat("el saludo del dashboard", TextoDe.el(DashboardScreen.SALUDO), is(saludo))
+    public void deberiaVerElSaludo(String saludo) {
+        theActorInTheSpotlight().attemptsTo(
+                that(TextoDe.el(DashboardScreen.SALUDO)).isEqualTo(saludo)
         );
     }
 
     @Y("el saldo mostrado debería ser {string}")
-    public void el_saldo_mostrado_deberia_ser(String saldo) {
-        theActorInTheSpotlight().should(
-                seeThat("el saldo de la cuenta principal", TextoDe.el(DashboardScreen.SALDO_PRINCIPAL), is(saldo))
+    public void elSaldoMostradoDeberiaSer(String saldo) {
+        theActorInTheSpotlight().attemptsTo(
+                that(TextoDe.el(DashboardScreen.SALDO_PRINCIPAL)).isEqualTo(saldo)
         );
     }
 
     @Entonces("debería ver el mensaje de error {string}")
-    public void deberia_ver_el_mensaje_de_error(String mensaje) {
-        theActorInTheSpotlight().should(
-                seeThat("el mensaje de error del login", TextoDe.el(LoginScreen.ERROR_LOGIN), is(mensaje))
+    public void deberiaVerElMensajeDeError(String mensaje) {
+        theActorInTheSpotlight().attemptsTo(
+                that(TextoDe.el(LoginScreen.ERROR_LOGIN)).isEqualTo(mensaje)
         );
     }
+
+    @Entonces("debería ver el mensaje de error del usuario {string}")
+    public void deberiaVerElMensajeDeErrorDelUsuario(String mensaje) {
+        theActorInTheSpotlight().attemptsTo(
+                that(TextoDe.el(LoginScreen.ERROR_USUARIO)).isEqualTo(mensaje)
+        );
+    }
+
+
 }
